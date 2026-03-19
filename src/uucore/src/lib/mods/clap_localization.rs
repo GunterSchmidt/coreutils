@@ -472,9 +472,9 @@ where
                     if matches.len() > 1 {
                         let mut msg =
                             translate!("clap-error-help-ambiguous-argument", "arg" => provided);
-                        matches.sort();
+                        matches.sort_unstable();
                         for m in matches {
-                            msg.push_str(&format!("\n  --{}", m));
+                            msg.push_str(&format!("\n  --{m}"));
                         }
                         return UUsageError::new(exit_code, msg);
                     }
