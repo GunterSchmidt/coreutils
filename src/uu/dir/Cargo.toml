@@ -20,6 +20,7 @@ path = "src/dir.rs"
 
 [dependencies]
 clap = { workspace = true, features = ["env"] }
+fluent.workspace = true
 uucore = { workspace = true, features = ["entries", "fs", "quoting-style"] }
 uu_ls = { workspace = true }
 

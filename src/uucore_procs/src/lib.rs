@@ -60,7 +60,8 @@ pub fn main(args: TokenStream, stream: TokenStream) -> TokenStream {
                     }
                     if e.usage() {
                         use std::io::{stderr, Write as _};
-                        let _ = writeln!(stderr(),"Try '{} --help' for more information.", uucore::execution_phrase());
+                        let msg_try = uucore::translate!("clap-error-help-suggestion", "command" => uucore::util_name());
+                        let _ = writeln!(stderr(),"{msg_try}");
                     }
                     e.code()
                 }

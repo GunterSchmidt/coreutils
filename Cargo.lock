@@ -3416,6 +3416,7 @@ name = "uu_dir"
 version = "0.7.0"
 dependencies = [
  "clap",
+ "fluent",
  "uu_ls",
  "uucore",
 ]
@@ -4364,6 +4365,7 @@ name = "uu_vdir"
 version = "0.7.0"
 dependencies = [
  "clap",
+ "fluent",
  "uu_ls",
  "uucore",
 ]
