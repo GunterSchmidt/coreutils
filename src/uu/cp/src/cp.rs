@@ -1620,7 +1620,7 @@ fn file_mode_for_interactive_overwrite(
 
                         Some((
                             format!("{mode_without_leading_digits:04o}"),
-                            uucore::fs::display_permissions_unix(mode, false),
+                            uucore::fs::display_permissions_unix(mode as u32, false),
                         ))
                     }
                 }
@@ -1898,7 +1898,17 @@ fn symlink_file(
     dest: &Path,
     symlinked_files: &mut HashSet<FileInformation>,
 ) -> CopyResult<()> {
-    #[cfg(not(windows))]
+    #[cfg(target_os = "wasi")]
+    {
+        return Err(CpError::IoErrContext(
+            std::io::Error::new(std::io::ErrorKind::Unsupported, "symlinks not supported"),
+            translate!("cp-error-cannot-create-symlink",
+                       "dest" => get_filename(dest).unwrap_or("?").quote(),
+                       "source" => get_filename(source).unwrap_or("?").quote()),
+        )
+        .into());
+    }
+    #[cfg(not(any(windows, target_os = "wasi")))]
     {
         std::os::unix::fs::symlink(source, dest).map_err(|e| {
             CpError::IoErrContext(
